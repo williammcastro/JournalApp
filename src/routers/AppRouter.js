@@ -12,24 +12,22 @@ import { firebase } from '../firebase/firebase-config';
 import { AuthRouter } from './AuthRouter';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
-
-
-//inicio manejo private routes
+import {  startLoadingNotes } from '../actions/notes';
 
 
 export const AppRouter = () => {
 
     const [cheking, setCheking] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-
     const dispatch = useDispatch()
     
     useEffect(() => {
         
-        firebase.auth().onAuthStateChanged( (user) => {
+        firebase.auth().onAuthStateChanged( async (user) => {
             if(user?.uid) {
                 dispatch( login( user.uid, user.displayName ) );
                 setIsLoggedIn(true);
+                dispatch( startLoadingNotes( user.uid ) )
             }else{
                 setIsLoggedIn(false);
             }

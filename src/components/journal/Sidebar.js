@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startLogout } from '../../actions/auth'
 import { JournalEntries } from './JournalEntries'
+import { startNewNote } from '../../actions/notes'
 
 
 
@@ -11,6 +12,7 @@ export const Sidebar = () => {
     //Revision que viene en el redux state?
     // const estado = useSelector( state => state );
     // console.log(estado)
+
     
     const {name} = useSelector( state => state.auth );
 
@@ -19,8 +21,14 @@ export const Sidebar = () => {
     const handleLogout = () => {
         // console.log('click');
         dispatch( startLogout() );        
-
     }
+
+
+    const handleAddNew = () => {
+        // console.log('click desde handle')
+        dispatch( startNewNote() );
+    }
+
 
     
     return (
@@ -34,13 +42,15 @@ export const Sidebar = () => {
             <button 
                 className='btn'
                 onClick={ handleLogout }
-            
             >
                 Logout
             </button>
         </div>
 
-        <div className='journal__new-entry'>
+        <div 
+            className='journal__new-entry'
+            onClick={ handleAddNew }
+        >
             <i className='far fa-calendar-plus fa-5x'></i>
             <p className='mt-5'>
                 New Entry

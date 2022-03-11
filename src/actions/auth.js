@@ -2,6 +2,7 @@ import { types } from '../types/types'
 import { firebase, googleAuthProvider } from '../firebase/firebase-config'
 import { finishLoading, startLoading } from './ui'
 import Swal from 'sweetalert2'
+import { noteLogout } from './notes'
 
 
 
@@ -76,6 +77,7 @@ export const startLogout = ( ) => {
          .then( ( ) => {
              console.log('then de startLogin dice: ejecutado resp:')
             dispatch( logout() );
+            dispatch( noteLogout() );
          })
          .catch( (err) => { 
              console.log( 'error de logout de firebase', err.message)
@@ -83,6 +85,7 @@ export const startLogout = ( ) => {
             });
     }
 }
+
 
 
 // forma corta : quitar return y envolver en parentesis
@@ -93,6 +96,7 @@ export const login = (uid, displayName) => ({
         displayName
     }
 });
+
 
 export const logout = () => ({
     type: types.logout,
